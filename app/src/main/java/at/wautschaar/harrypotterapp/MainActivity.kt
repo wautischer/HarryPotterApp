@@ -8,6 +8,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -29,6 +31,9 @@ import at.wautschaar.harrypotterapp.network.HPAPI
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import org.jetbrains.annotations.Async
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,12 +60,16 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun HogwardsStudentCard(hogwardsStudent: HogwardsStudent, modifier: Modifier = Modifier) {
-    Card (modifier = modifier) {
+    Card (modifier = modifier.padding(top = 50.dp)) {
         Column (modifier = Modifier
             .fillMaxWidth()
+            .height(500.dp)
             .background(Color.Blue),
             horizontalAlignment = Alignment.CenterHorizontally) {
-            Image(painter = painterResource(id = R.drawable.ic_launcher_background), contentDescription = "Student Picture")
+            AsyncImage(
+                model = hogwardsStudent.image,
+                contentDescription = "Student Image"
+            )
             Text (text = hogwardsStudent.name, color = Color.White)
         }
     }
@@ -80,6 +89,8 @@ fun HogwardsStudentList(HogwardsStudents: List<HogwardsStudent>, modifier: Modif
 fun HogwardsStudentCardPreview(hogwardsStudent: HogwardsStudent = HogwardsStudent("1", "Hary Potter", ""), modifier: Modifier = Modifier) {
     Card (modifier = modifier) {
         Column (modifier = Modifier
+            .fillMaxWidth()
+            .height(250.dp)
             .background(Color.Blue),
             horizontalAlignment = Alignment.CenterHorizontally) {
             Image(painter = painterResource(id = R.drawable.ic_launcher_background), contentDescription = "Student Picture")
