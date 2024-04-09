@@ -10,14 +10,18 @@ import retrofit2.http.GET
 private const val BASE_URL = "https://hp-api.onrender.com/api/"
 
 private val retrofit = Retrofit.Builder()
-    .addConverterFactory(Json {
-        ignoreUnknownKeys = true
-    }.asConverterFactory("application/json".toMediaType())
-).baseUrl(BASE_URL).build()
+    .addConverterFactory(
+        Json {
+            ignoreUnknownKeys = true
+        }.asConverterFactory("application/json".toMediaType())
+    ).baseUrl(BASE_URL).build()
 
 interface HPAPIService {
     @GET("characters/students")
     suspend fun getStudents(): List<HogwardsStudent>
+
+    @GET("characters/house/gryffindor")
+    suspend fun getRoomMates() : List<String>
 }
 
 object HPAPI {

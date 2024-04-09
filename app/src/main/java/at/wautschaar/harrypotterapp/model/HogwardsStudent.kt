@@ -6,5 +6,8 @@ import kotlinx.serialization.Serializable
 data class HogwardsStudent(
     val id : String,
     val name : String,
-    val image : String
+    val image : String,
+    val species : String,
+    val house : String,
+    val wizard : Boolean
 )
