@@ -7,13 +7,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -57,9 +55,39 @@ class MainActivity : ComponentActivity() {
                         studentList = HPAPI.retrofitService.getStudents()
 
                     }
+
+                    /*
+                    var roomMateList by remember {
+                        mutableStateOf<List<HogwardsStudent>>(emptyList())
+                    }
+                    LaunchedEffect(Unit) {
+                        roomMateList = HPAPI.retrofitService.getRoomMatesHufflepuff()
+                    }
+                     */
+
                     HogwardsStudentList(HogwardsStudents = studentList)
+                    //RoomMatesList(RoomMates = roomMateList)
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun RoomMatesCard (roomMate: HogwardsStudent, modifier: Modifier = Modifier) {
+    Card(modifier = Modifier) {
+        Column {
+            Text(text = roomMate.name)
+        }
+    }
+}
+
+@Composable
+fun RoomMatesList (RoomMates: List<HogwardsStudent>, modifier: Modifier = Modifier) {
+    LazyColumn(modifier = Modifier) {
+        items(RoomMates) {tempRoomMate ->
+            RoomMatesCard(roomMate = tempRoomMate, modifier = Modifier)
+
         }
     }
 }
@@ -113,7 +141,7 @@ fun HogwardsStudentCard(hogwardsStudent: HogwardsStudent, modifier: Modifier = M
             Row (modifier = Modifier.padding(top = 10.dp)){
                 Button(
                     onClick = { /*TODO*/ },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(end = 10.dp),
                     colors = ButtonDefaults.buttonColors(Color.DarkGray)
                 ) {
                     Text(text = "Hauskameraden!")

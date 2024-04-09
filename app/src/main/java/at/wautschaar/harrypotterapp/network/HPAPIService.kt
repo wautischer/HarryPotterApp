@@ -21,8 +21,12 @@ interface HPAPIService {
     suspend fun getStudents(): List<HogwardsStudent>
 
     @GET("characters/house/gryffindor")
-    suspend fun getRoomMates() : List<String>
+    suspend fun getRoomMatesGryffindor(): List<HogwardsStudent>
+
+    @GET("characters/house/hufflepuff")
+    suspend fun getRoomMatesHufflepuff(): List<HogwardsStudent>
 }
+
 
 object HPAPI {
     val retrofitService: HPAPIService by lazy {
