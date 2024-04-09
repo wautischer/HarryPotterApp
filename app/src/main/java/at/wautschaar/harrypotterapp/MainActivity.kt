@@ -23,7 +23,12 @@ import at.wautschaar.harrypotterapp.model.HogwardsStudent
 import at.wautschaar.harrypotterapp.ui.theme.HarrypotterAppTheme
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import at.wautschaar.harrypotterapp.network.HPAPI
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,11 +39,14 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LaunchedEffect(Unit){
-                        val studentList = HPAPI.retrofitService.getStudents()
-                        print(studentList)
+                    var studentList by remember {
+                        mutableStateOf<List<HogwardsStudent>>(emptyList())
                     }
-                    HogwardsStudentList(HogwardsStudents = listOf<HogwardsStudent>(HogwardsStudent("0", "Harry Potter", "empty"), HogwardsStudent("1", "Ron Weasly", "empty")))
+                    LaunchedEffect(Unit){
+                        studentList = HPAPI.retrofitService.getStudents()
+
+                    }
+                    HogwardsStudentList(HogwardsStudents = studentList)
                 }
             }
         }
