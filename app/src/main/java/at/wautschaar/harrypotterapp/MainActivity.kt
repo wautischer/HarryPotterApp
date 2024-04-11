@@ -37,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import at.wautschaar.harrypotterapp.model.RoomMates
 import coil.compose.AsyncImage
 
 class MainActivity : ComponentActivity() {
@@ -56,14 +57,12 @@ class MainActivity : ComponentActivity() {
 
                     }
 
-                    /*
                     var roomMateList by remember {
-                        mutableStateOf<List<HogwardsStudent>>(emptyList())
+                        mutableStateOf<List<RoomMates>>(emptyList())
                     }
                     LaunchedEffect(Unit) {
                         roomMateList = HPAPI.retrofitService.getRoomMatesHufflepuff()
                     }
-                     */
 
                     HogwardsStudentList(HogwardsStudents = studentList)
                     //RoomMatesList(RoomMates = roomMateList)
@@ -74,7 +73,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun RoomMatesCard (roomMate: HogwardsStudent, modifier: Modifier = Modifier) {
+fun RoomMatesCard (roomMate: RoomMates, modifier: Modifier = Modifier) {
     Card(modifier = Modifier) {
         Column {
             Text(text = roomMate.name)
@@ -83,7 +82,7 @@ fun RoomMatesCard (roomMate: HogwardsStudent, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun RoomMatesList (RoomMates: List<HogwardsStudent>, modifier: Modifier = Modifier) {
+fun RoomMatesList (RoomMates: List<RoomMates>, modifier: Modifier = Modifier) {
     LazyColumn(modifier = Modifier) {
         items(RoomMates) {tempRoomMate ->
             RoomMatesCard(roomMate = tempRoomMate, modifier = Modifier)
@@ -140,7 +139,7 @@ fun HogwardsStudentCard(hogwardsStudent: HogwardsStudent, modifier: Modifier = M
             Text(text = "Zaubert der? "+wizardText, fontSize = 20.sp)
             Row (modifier = Modifier.padding(top = 10.dp)){
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { hogwardsStudent.house },
                     modifier = Modifier.fillMaxWidth().padding(end = 10.dp),
                     colors = ButtonDefaults.buttonColors(Color.DarkGray)
                 ) {
