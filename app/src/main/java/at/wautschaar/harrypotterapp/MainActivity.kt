@@ -57,12 +57,14 @@ class MainActivity : ComponentActivity() {
 
                     }
 
+
                     var roomMateList by remember {
                         mutableStateOf<List<RoomMates>>(emptyList())
                     }
                     LaunchedEffect(Unit) {
                         roomMateList = HPAPI.retrofitService.getRoomMatesHufflepuff()
                     }
+
 
                     HogwardsStudentList(HogwardsStudents = studentList)
                     //RoomMatesList(RoomMates = roomMateList)
@@ -86,7 +88,6 @@ fun RoomMatesList (RoomMates: List<RoomMates>, modifier: Modifier = Modifier) {
     LazyColumn(modifier = Modifier) {
         items(RoomMates) {tempRoomMate ->
             RoomMatesCard(roomMate = tempRoomMate, modifier = Modifier)
-
         }
     }
 }
@@ -124,26 +125,26 @@ fun HogwardsStudentCard(hogwardsStudent: HogwardsStudent, modifier: Modifier = M
 
             val HouseText
             = if (hogwardsStudent.house.equals("")){
-                "ka bro weiß auch nicht."
+                "Unknown"
             } else {
                 hogwardsStudent.house
             }
-            Text(text = "Haus: "+HouseText, fontSize = 20.sp)
+            Text(text = "House: $HouseText", fontSize = 20.sp)
 
             val wizardText
             = if (hogwardsStudent.wizard){
-                "Der is am Zaubern."
+                "Wizard"
             }else{
-                "Hokusbokus, oder so."
+                "No Wizard"
             }
-            Text(text = "Zaubert der? "+wizardText, fontSize = 20.sp)
+            Text(text = "Wizard status: $wizardText", fontSize = 20.sp)
             Row (modifier = Modifier.padding(top = 10.dp)){
                 Button(
-                    onClick = { hogwardsStudent.house },
+                    onClick = { System.out.println(hogwardsStudent.house) },
                     modifier = Modifier.fillMaxWidth().padding(end = 10.dp),
                     colors = ButtonDefaults.buttonColors(Color.DarkGray)
                 ) {
-                    Text(text = "Hauskameraden!")
+                    Text(text = "Housemates!")
                 }
             }
         }
