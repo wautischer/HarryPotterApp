@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -65,7 +66,6 @@ class MainActivity : ComponentActivity() {
                         roomMateList = HPAPI.retrofitService.getRoomMatesHufflepuff()
                     }
 
-
                     HogwardsStudentList(HogwardsStudents = studentList)
                     //RoomMatesList(RoomMates = roomMateList)
                 }
@@ -94,57 +94,60 @@ fun RoomMatesList (RoomMates: List<RoomMates>, modifier: Modifier = Modifier) {
 
 @Composable
 fun HogwardsStudentCard(hogwardsStudent: HogwardsStudent, modifier: Modifier = Modifier) {
-    Card (modifier = modifier
-        .padding(top = 50.dp, start = 10.dp, end = 10.dp)) {
-        Column (modifier = Modifier
-            .fillMaxWidth()
-            .height(450.dp)
-            .background(Color.Black),
-            horizontalAlignment = Alignment.CenterHorizontally) {
-            AsyncImage(
-                model = hogwardsStudent.image,
-                contentDescription = "Student Image",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(),
-                error = painterResource(R.drawable.hpimageonerror),
-                contentScale = ContentScale.FillWidth //damit aufjedenfall die gesamte Width verwendet wird (egal ob das Bild abgeschnitten wird)
-            )
-        }
-        Column (modifier = Modifier
-            .padding(start = 10.dp, bottom = 10.dp)) {
-            Text (
-                text = hogwardsStudent.name,
-                color = Color.Black,
-                fontSize = 25.sp,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = 10.dp, bottom = 10.dp),
-            )
-            Text(text = "Species: "+hogwardsStudent.species, fontSize = 20.sp)
-
-            val HouseText
-            = if (hogwardsStudent.house.equals("")){
-                "Unknown"
-            } else {
-                hogwardsStudent.house
+    Box(modifier = Modifier.background(Color.DarkGray)){
+        Card (modifier = modifier
+            .padding(top = 50.dp, start = 10.dp, end = 10.dp)) {
+            Column (modifier = Modifier
+                .fillMaxWidth()
+                .height(450.dp)
+                .background(Color.Black),
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                AsyncImage(
+                    model = hogwardsStudent.image,
+                    contentDescription = "Student Image",
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    error = painterResource(R.drawable.hpimageonerror),
+                    contentScale = ContentScale.FillWidth //damit aufjedenfall die gesamte Width verwendet wird (egal ob das Bild abgeschnitten wird)
+                )
             }
-            Text(text = "House: $HouseText", fontSize = 20.sp)
+            Column (modifier = Modifier
+                .padding(start = 10.dp, bottom = 10.dp)) {
+                Text (
+                    text = hogwardsStudent.name,
+                    color = Color.Black,
+                    fontSize = 25.sp,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 10.dp, bottom = 10.dp),
+                )
+                Text(text = "Species: "+hogwardsStudent.species, fontSize = 20.sp)
 
-            val wizardText
-            = if (hogwardsStudent.wizard){
-                "Wizard"
-            }else{
-                "No Wizard"
-            }
-            Text(text = "Wizard status: $wizardText", fontSize = 20.sp)
-            Row (modifier = Modifier.padding(top = 10.dp)){
-                Button(
-                    onClick = { System.out.println(hogwardsStudent.house) },
-                    modifier = Modifier.fillMaxWidth().padding(end = 10.dp),
-                    colors = ButtonDefaults.buttonColors(Color.DarkGray)
-                ) {
-                    Text(text = "Housemates!")
+                val HouseText
+                        = if (hogwardsStudent.house.equals("")){
+                    "Unknown"
+                } else {
+                    hogwardsStudent.house
+                }
+                Text(text = "House: $HouseText", fontSize = 20.sp)
+
+                val wizardText
+                        = if (hogwardsStudent.wizard){
+                    "Wizard"
+                }else{
+                    "No Wizard"
+                }
+                Text(text = "Wizard status: $wizardText", fontSize = 20.sp)
+                Row (modifier = Modifier.padding(top = 10.dp)){
+                    Button(
+                        onClick = { System.out.println(hogwardsStudent.house) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 10.dp),
+                        colors = ButtonDefaults.buttonColors(Color.DarkGray)
+                    ) {
+                        Text(text = "Housemates!")
+                    }
                 }
             }
         }
